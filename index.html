@@ -39,6 +39,50 @@ main{min-width:0}.hero{position:relative;overflow:hidden;background:#fff;border:
 <div class="footnote"><strong>Por que atualizar semanalmente?</strong> Chamadas podem ser prorrogadas, encerradas, corrigidas ou retiradas. Uma rotina automática reavalia as chamadas listadas e pesquisa novas todo início de semana, evitando prazo vencido e permitindo incorporar oportunidades enquanto ainda há tempo para adaptar o artigo.</div>
 <p class="credit">Feito por <strong>Raquel Galvão</strong> · Grupo de Pesquisa FORTE, UESC</p>
 </main></div>
+<dialog class="dlg" id="dlg-membro" aria-label="Área do membro"><section class="membro" id="area-membro">
+<button class="mfechar" id="fechar-membro" type="button" aria-label="Fechar">&times;</button><h3>Área do membro</h3>
+<p>Espaço para quem é do Grupo FORTE incluir ou remover chamadas. Pede a senha do grupo, e o que você fizer aqui aparece no painel para todo mundo na hora.</p>
+<div class="mtabs" role="tablist">
+<button class="mtab" id="tab-incluir" role="tab" aria-selected="true" aria-controls="form-incluir">Incluir chamada</button>
+<button class="mtab" id="tab-remover" role="tab" aria-selected="false" aria-controls="form-remover">Remover chamada</button>
+</div>
+
+<form class="mform on" id="form-incluir" role="tabpanel" aria-labelledby="tab-incluir">
+<div class="mrow">
+<div class="mf"><label for="i-name">Revista</label><input id="i-name" required placeholder="Ex: Signum, Estudos da Linguagem (UEL)"></div>
+<div class="mf"><label for="i-url">Link da chamada</label><input id="i-url" type="url" required placeholder="https://..."><small>Prefira a página do periódico, não a do anúncio.</small></div>
+</div>
+<div class="mf"><label for="i-title">Título do dossiê ou da chamada</label><input id="i-title" placeholder="Ex: Dossiê sobre IA e ensino de línguas"></div>
+<div class="mrow">
+<div class="mf"><label for="i-deadline">Prazo</label><input id="i-deadline" placeholder="Ex: 01/09/2026, ou Fluxo contínuo"></div>
+<div class="mf"><label for="i-status">Situação</label><select id="i-status"><option>Chamada aberta</option><option>Próxima abertura</option><option>Fluxo contínuo</option></select></div>
+</div>
+<div class="mrow">
+<div class="mf"><label for="i-theme">Eixo</label><input id="i-theme" list="eixos" placeholder="Ex: IA crítica e ética"><datalist id="eixos"></datalist></div>
+<div class="mf"><label for="i-scope">Abrangência</label><select id="i-scope"><option>Nacional</option><option>Internacional</option></select></div>
+</div>
+<div class="mf"><label for="i-description">Sobre a chamada</label><textarea id="i-description" placeholder="Do que trata o dossiê, em uma ou duas frases."></textarea></div>
+<div class="mrow">
+<div class="mf"><label for="i-tags">Palavras-chave</label><input id="i-tags" placeholder="separe por vírgula"></div>
+<div class="mf"><label for="i-fit">Aderência ao FORTE</label><select id="i-fit"><option>Muito alta</option><option>Alta</option></select></div>
+</div>
+<div class="mrow">
+<div class="mf"><label for="i-authorship">Regras de autoria</label><input id="i-authorship" placeholder="Ex: exige coautoria com doutor"></div>
+<div class="mf"><label for="i-cost">Custos</label><input id="i-cost" placeholder="Ex: sem taxas"></div>
+</div>
+<div class="mf"><label for="i-senha">Senha do grupo</label><input id="i-senha" type="password" required></div>
+<button class="msend" type="submit">Incluir no painel</button>
+<div class="maviso" id="aviso-incluir" role="status"></div>
+</form>
+
+<form class="mform" id="form-remover" role="tabpanel" aria-labelledby="tab-remover">
+<div class="mf"><label for="r-url">Qual chamada remover</label><select id="r-url" required></select></div>
+<div class="mf"><label for="r-senha">Senha do grupo</label><input id="r-senha" type="password" required></div>
+<button class="msend" type="submit">Remover do painel</button>
+<div class="maviso" id="aviso-remover" role="status"></div>
+</form>
+<p class="fonte" id="fonte-dados"></p>
+</section></dialog>
 <script>
 /* ATUALIZADO AUTOMATICAMENTE — não editar manualmente abaixo desta linha sem
    atualizar também LAST_CHECK. A rotina semanal reescreve o array `data`. */
@@ -206,48 +250,4 @@ if(btnAbrir&&dlgMembro){
 
 redesenhar();
 carregarDaPlanilha();
-</script><dialog class="dlg" id="dlg-membro" aria-label="Área do membro"><section class="membro" id="area-membro">
-<button class="mfechar" id="fechar-membro" type="button" aria-label="Fechar">&times;</button><h3>Área do membro</h3>
-<p>Espaço para quem é do Grupo FORTE incluir ou remover chamadas. Pede a senha do grupo, e o que você fizer aqui aparece no painel para todo mundo na hora.</p>
-<div class="mtabs" role="tablist">
-<button class="mtab" id="tab-incluir" role="tab" aria-selected="true" aria-controls="form-incluir">Incluir chamada</button>
-<button class="mtab" id="tab-remover" role="tab" aria-selected="false" aria-controls="form-remover">Remover chamada</button>
-</div>
-
-<form class="mform on" id="form-incluir" role="tabpanel" aria-labelledby="tab-incluir">
-<div class="mrow">
-<div class="mf"><label for="i-name">Revista</label><input id="i-name" required placeholder="Ex: Signum, Estudos da Linguagem (UEL)"></div>
-<div class="mf"><label for="i-url">Link da chamada</label><input id="i-url" type="url" required placeholder="https://..."><small>Prefira a página do periódico, não a do anúncio.</small></div>
-</div>
-<div class="mf"><label for="i-title">Título do dossiê ou da chamada</label><input id="i-title" placeholder="Ex: Dossiê sobre IA e ensino de línguas"></div>
-<div class="mrow">
-<div class="mf"><label for="i-deadline">Prazo</label><input id="i-deadline" placeholder="Ex: 01/09/2026, ou Fluxo contínuo"></div>
-<div class="mf"><label for="i-status">Situação</label><select id="i-status"><option>Chamada aberta</option><option>Próxima abertura</option><option>Fluxo contínuo</option></select></div>
-</div>
-<div class="mrow">
-<div class="mf"><label for="i-theme">Eixo</label><input id="i-theme" list="eixos" placeholder="Ex: IA crítica e ética"><datalist id="eixos"></datalist></div>
-<div class="mf"><label for="i-scope">Abrangência</label><select id="i-scope"><option>Nacional</option><option>Internacional</option></select></div>
-</div>
-<div class="mf"><label for="i-description">Sobre a chamada</label><textarea id="i-description" placeholder="Do que trata o dossiê, em uma ou duas frases."></textarea></div>
-<div class="mrow">
-<div class="mf"><label for="i-tags">Palavras-chave</label><input id="i-tags" placeholder="separe por vírgula"></div>
-<div class="mf"><label for="i-fit">Aderência ao FORTE</label><select id="i-fit"><option>Muito alta</option><option>Alta</option></select></div>
-</div>
-<div class="mrow">
-<div class="mf"><label for="i-authorship">Regras de autoria</label><input id="i-authorship" placeholder="Ex: exige coautoria com doutor"></div>
-<div class="mf"><label for="i-cost">Custos</label><input id="i-cost" placeholder="Ex: sem taxas"></div>
-</div>
-<div class="mf"><label for="i-senha">Senha do grupo</label><input id="i-senha" type="password" required></div>
-<button class="msend" type="submit">Incluir no painel</button>
-<div class="maviso" id="aviso-incluir" role="status"></div>
-</form>
-
-<form class="mform" id="form-remover" role="tabpanel" aria-labelledby="tab-remover">
-<div class="mf"><label for="r-url">Qual chamada remover</label><select id="r-url" required></select></div>
-<div class="mf"><label for="r-senha">Senha do grupo</label><input id="r-senha" type="password" required></div>
-<button class="msend" type="submit">Remover do painel</button>
-<div class="maviso" id="aviso-remover" role="status"></div>
-</form>
-<p class="fonte" id="fonte-dados"></p>
-</section></dialog>
-</body></html>
+</script></body></html>
