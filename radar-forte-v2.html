@@ -99,6 +99,18 @@ Object.values(c).forEach(el=>{el.addEventListener("input",render);el.addEventLis
 document.getElementById("reset").onclick=()=>{Object.values(c).forEach(el=>el.value="");render()};
 
 /* ---------- planilha do grupo ---------- */
+function normalizarPrazo(v){
+  if(!v)return"";
+  const t=String(v);
+  if(!/GMT|\dT\d{2}:/.test(t))return t;          /* so mexe em data crua do Sheets */
+  const d=new Date(t);
+  if(isNaN(d))return t;
+  const p=n=>String(n).padStart(2,"0");
+  return p(d.getDate())+"/"+p(d.getMonth()+1)+"/"+d.getFullYear();
+}
+function normalizar(lista){
+  return lista.map(x=>Object.assign({},x,{deadline:normalizarPrazo(x.deadline)}));
+}
 function redesenhar(){populateThemes();stats();render();preencherRemocao();preencherEixos()}
 
 function preencherRemocao(){
@@ -122,7 +134,7 @@ async function carregarDaPlanilha(){
     const r=await fetch(API,{method:"GET"});
     const j=await r.json();
     if(!j.ok)throw new Error(j.error||"resposta inválida");
-    if(Array.isArray(j.data)&&j.data.length){data=j.data;redesenhar()}
+    if(Array.isArray(j.data)&&j.data.length){data=normalizar(j.data);redesenhar()}
     marcarFonte("Lista carregada da planilha do grupo.");
   }catch(e){
     marcarFonte("Não consegui falar com a planilha agora, então o painel está mostrando a última lista salva no arquivo.");
@@ -169,7 +181,7 @@ if(formIncluir)formIncluir.onsubmit=async ev=>{
       tags:v("i-tags").split(",").map(t=>t.trim()).filter(Boolean),
       description:v("i-description"),authorship:v("i-authorship"),cost:v("i-cost"),url:v("i-url")
     }});
-    data=j.data;redesenhar();
+    data=normalizar(j.data);redesenhar();
     aviso("aviso-incluir","Pronto, a chamada já está no painel.",true);
     formIncluir.reset();
   }catch(e){
@@ -187,7 +199,7 @@ if(formRemover)formRemover.onsubmit=async ev=>{
   btn.disabled=true;
   try{
     const j=await chamarPlanilha({acao:"remover",senha:document.getElementById("r-senha").value,url:sel.value});
-    data=j.data;redesenhar();
+    data=normalizar(j.data);redesenhar();
     aviso("aviso-remover","Removida do painel.",true);
     formRemover.reset();
   }catch(e){
