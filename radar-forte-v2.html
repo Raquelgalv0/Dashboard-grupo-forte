@@ -137,7 +137,7 @@ async function carregarDaPlanilha(){
     if(Array.isArray(j.data)&&j.data.length){data=normalizar(j.data);redesenhar()}
     marcarFonte("Lista carregada da planilha do grupo.");
   }catch(e){
-    marcarFonte("Não consegui falar com a planilha agora, então o painel está mostrando a última lista salva no arquivo.");
+    marcarFonte("Não consegui falar com a planilha ("+(e&&e.message?e.message:e)+"), então o painel está mostrando a última lista salva no arquivo.");console.error("Radar FORTE, falha ao ler a planilha:",e);
   }
 }
 
