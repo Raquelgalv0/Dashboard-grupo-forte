@@ -21,6 +21,14 @@ function abrirAba_() {
   return aba;
 }
 
+/** O Sheets vira datas em objeto Date; devolvemos sempre como texto DD/MM/AAAA. */
+function comoTexto_(valor) {
+  if (valor instanceof Date) {
+    return Utilities.formatDate(valor, Session.getScriptTimeZone(), 'dd/MM/yyyy');
+  }
+  return String(valor == null ? '' : valor);
+}
+
 function lerTudo_() {
   const aba = abrirAba_();
   const linhas = aba.getDataRange().getValues();
@@ -36,7 +44,7 @@ function lerTudo_() {
       const chamada = {};
       COLUNAS.forEach(coluna => {
         const i = cabecalho.indexOf(coluna);
-        chamada[coluna] = i === -1 ? '' : String(linha[i] == null ? '' : linha[i]);
+        chamada[coluna] = i === -1 ? '' : comoTexto_(linha[i]);
       });
       chamada.tags = chamada.tags
         ? chamada.tags.split(',').map(t => t.trim()).filter(Boolean)
